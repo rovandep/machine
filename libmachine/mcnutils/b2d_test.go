@@ -11,8 +11,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/code-ready/machine/libmachine/log"
-	"github.com/code-ready/machine/version"
+	"github.com/docker/machine/libmachine/log"
+	"github.com/docker/machine/version"
 	"github.com/stretchr/testify/assert"
 )
 

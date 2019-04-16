@@ -11,15 +11,13 @@ import (
 	"github.com/code-ready/machine/libmachine/drivers"
 	"github.com/code-ready/machine/libmachine/drivers/plugin/localbinary"
 	"github.com/code-ready/machine/libmachine/drivers/rpc"
-	"github.com/code-ready/machine/libmachine/engine"
 	"github.com/code-ready/machine/libmachine/host"
 	"github.com/code-ready/machine/libmachine/log"
-	"github.com/docker/machine/libmachine/mcnerror"
-	"github.com/docker/machine/libmachine/mcnutils"
+	"github.com/code-ready/machine/libmachine/mcnerror"
+	"github.com/code-ready/machine/libmachine/mcnutils"
 	"github.com/code-ready/machine/libmachine/persist"
 	"github.com/code-ready/machine/libmachine/ssh"
 	"github.com/code-ready/machine/libmachine/state"
-	"github.com/code-ready/machine/libmachine/swarm"
 	"github.com/code-ready/machine/libmachine/version"
 )
 
@@ -70,16 +68,6 @@ func (api *Client) NewHost(driverName string, rawDriver []byte) (*host.Host, err
 				ClientKeyPath:    filepath.Join(api.certsDir, "key.pem"),
 				ServerCertPath:   filepath.Join(api.GetMachinesDir(), "server.pem"),
 				ServerKeyPath:    filepath.Join(api.GetMachinesDir(), "server-key.pem"),
-			},
-			EngineOptions: &engine.Options{
-				InstallURL:    drivers.DefaultEngineInstallURL,
-				StorageDriver: "overlay2",
-				TLSVerify:     true,
-			},
-			SwarmOptions: &swarm.Options{
-				Host:     "tcp://0.0.0.0:3376",
-				Image:    "swarm:latest",
-				Strategy: "spread",
 			},
 		},
 	}, nil
@@ -155,7 +143,7 @@ func (api *Client) performCreate(h *host.Host) error {
 		return fmt.Errorf("Error waiting for machine to be running: %s", err)
 	}
 
-	log.Info("Docker is up and running!")
+	log.Info("Machine is up and running!")
 	return nil
 }
 

@@ -269,6 +269,16 @@ func (c *RPCClientDriver) DriverName() string {
 	return driverName
 }
 
+// DriverVersion returns the name of the driver
+func (c *RPCClientDriver) DriverVersion() string {
+	driverVersion, err := c.rpcStringCall(DriverNameMethod)
+	if err != nil {
+		log.Warnf("Error attempting call to get driver version: %s", err)
+	}
+
+	return driverVersion
+}
+
 func (c *RPCClientDriver) SetConfigFromFlags(flags drivers.DriverOptions) error {
 	return c.Client.Call(SetConfigFromFlagsMethod, &flags, nil)
 }

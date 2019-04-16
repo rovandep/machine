@@ -8,7 +8,6 @@ import (
 const (
 	DefaultSSHUser          = "root"
 	DefaultSSHPort          = 22
-	DefaultEngineInstallURL = "https://get.docker.com"
 )
 
 // BaseDriver - Embed this struct into drivers to provide the common set
@@ -20,13 +19,15 @@ type BaseDriver struct {
 	SSHPort        int
 	SSHKeyPath     string
 	StorePath      string
-	SwarmMaster    bool
-	SwarmHost      string
-	SwarmDiscovery string
 }
 
 // DriverName returns the name of the driver
 func (d *BaseDriver) DriverName() string {
+	return "unknown"
+}
+
+// DriverName returns the name of the driver
+func (d *BaseDriver) DriverVersion() string {
 	return "unknown"
 }
 
@@ -76,19 +77,4 @@ func (d *BaseDriver) PreCreateCheck() error {
 // ResolveStorePath returns the store path where the machine is
 func (d *BaseDriver) ResolveStorePath(file string) string {
 	return filepath.Join(d.StorePath, "machines", d.MachineName, file)
-}
-
-// SetSwarmConfigFromFlags configures the driver for swarm
-func (d *BaseDriver) SetSwarmConfigFromFlags(flags DriverOptions) {
-	d.SwarmMaster = flags.Bool("swarm-master")
-	d.SwarmHost = flags.String("swarm-host")
-	d.SwarmDiscovery = flags.String("swarm-discovery")
-}
-
-func EngineInstallURLFlagSet(flags DriverOptions) bool {
-	return EngineInstallURLSet(flags.String("engine-install-url"))
-}
-
-func EngineInstallURLSet(url string) bool {
-	return url != DefaultEngineInstallURL && url != ""
 }

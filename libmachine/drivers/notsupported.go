@@ -87,3 +87,7 @@ func (d *DriverNotSupported) Kill() error {
 func (d *DriverNotSupported) Upgrade() error {
 	return NotSupported{d.DriverName()}
 }
+
+func (d *DriverNotSupported) DriverVersion() string {
+	return "unknown"
+}

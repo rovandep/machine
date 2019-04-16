@@ -31,6 +31,11 @@ func (d *Driver) DriverName() string {
 	return "not-found"
 }
 
+// DriverVersion returns the version of the driver
+func (d *Driver) DriverVersion() string {
+	return "unknown"
+}
+
 func (d *Driver) PreCreateCheck() error {
 	return NotLoadable{d.Name}
 }

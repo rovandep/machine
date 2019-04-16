@@ -70,6 +70,9 @@ type Driver interface {
 
 	// Stop a host gracefully
 	Stop() error
+
+	// Get Version information
+	DriverVersion() string
 }
 
 var ErrHostIsNotRunning = errors.New("Host is not running")

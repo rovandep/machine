@@ -17,10 +17,7 @@ var (
 	// plugin server.
 	defaultTimeout               = 10 * time.Second
 	CurrentBinaryIsDockerMachine = false
-	CoreDrivers                  = []string{"amazonec2", "azure", "digitalocean",
-		"exoscale", "generic", "google", "hyperv", "none", "openstack",
-		"rackspace", "softlayer", "virtualbox", "vmwarefusion",
-		"vmwarevcloudair", "vmwarevsphere"}
+	CoreDrivers                  = []string{"generic", "hyperv", "none", "virtualbox"}
 )
 
 const (
@@ -104,11 +101,11 @@ func driverPath(driverName string) string {
 				return os.Args[0]
 			}
 
-			return "docker-machine"
+			return "crc-machine"
 		}
 	}
 
-	return fmt.Sprintf("docker-machine-driver-%s", driverName)
+	return fmt.Sprintf("crc-driver-%s", driverName)
 }
 
 func NewPlugin(driverName string) (*Plugin, error) {

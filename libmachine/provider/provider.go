@@ -1,6 +1,6 @@
 package provider
 
-import "github.com/docker/machine/libmachine/host"
+import "github.com/code-ready/machine/libmachine/host"
 
 type Provider interface {
 	// IsValid checks whether or not the Provider can successfully create

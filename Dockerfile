@@ -12,7 +12,7 @@ RUN go get  golang.org/x/lint/golint \
             golang.org/x/tools/cover
 
 ENV USER root
-WORKDIR /go/src/github.com/docker/machine
+WORKDIR /go/src/github.com/code-ready/machine
 
 COPY . ./
 RUN mkdir bin

@@ -8,27 +8,16 @@ import (
 	"path/filepath"
 
 	"github.com/codegangsta/cli"
-	"github.com/docker/machine/commands"
-	"github.com/docker/machine/commands/mcndirs"
-	"github.com/docker/machine/drivers/amazonec2"
-	"github.com/docker/machine/drivers/azure"
-	"github.com/docker/machine/drivers/digitalocean"
-	"github.com/docker/machine/drivers/exoscale"
-	"github.com/docker/machine/drivers/generic"
-	"github.com/docker/machine/drivers/google"
-	"github.com/docker/machine/drivers/hyperv"
-	"github.com/docker/machine/drivers/none"
-	"github.com/docker/machine/drivers/openstack"
-	"github.com/docker/machine/drivers/rackspace"
-	"github.com/docker/machine/drivers/softlayer"
-	"github.com/docker/machine/drivers/virtualbox"
-	"github.com/docker/machine/drivers/vmwarefusion"
-	"github.com/docker/machine/drivers/vmwarevcloudair"
-	"github.com/docker/machine/drivers/vmwarevsphere"
-	"github.com/docker/machine/libmachine/drivers/plugin"
-	"github.com/docker/machine/libmachine/drivers/plugin/localbinary"
-	"github.com/docker/machine/libmachine/log"
-	"github.com/docker/machine/version"
+	"github.com/code-ready/machine/commands"
+	"github.com/code-ready/machine/commands/mcndirs"
+	"github.com/code-ready/machine/drivers/generic"
+	"github.com/code-ready/machine/drivers/hyperv"
+	"github.com/code-ready/machine/drivers/none"
+	"github.com/code-ready/machine/drivers/virtualbox"
+	"github.com/code-ready/machine/libmachine/drivers/plugin"
+	"github.com/code-ready/machine/libmachine/drivers/plugin/localbinary"
+	"github.com/code-ready/machine/libmachine/log"
+	"github.com/code-ready/machine/version"
 )
 
 var AppHelpTemplate = `Usage: {{.Name}} {{if .Flags}}[OPTIONS] {{end}}COMMAND [arg...]
@@ -97,7 +86,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = filepath.Base(os.Args[0])
 	app.Author = "Docker Machine Contributors"
-	app.Email = "https://github.com/docker/machine"
+	app.Email = "https://github.com/code-ready/machine"
 
 	app.Commands = commands.Commands
 	app.CommandNotFound = cmdNotFound
@@ -167,36 +156,14 @@ func main() {
 
 func runDriver(driverName string) {
 	switch driverName {
-	case "amazonec2":
-		plugin.RegisterDriver(amazonec2.NewDriver("", ""))
-	case "azure":
-		plugin.RegisterDriver(azure.NewDriver("", ""))
-	case "digitalocean":
-		plugin.RegisterDriver(digitalocean.NewDriver("", ""))
-	case "exoscale":
-		plugin.RegisterDriver(exoscale.NewDriver("", ""))
 	case "generic":
 		plugin.RegisterDriver(generic.NewDriver("", ""))
-	case "google":
-		plugin.RegisterDriver(google.NewDriver("", ""))
 	case "hyperv":
 		plugin.RegisterDriver(hyperv.NewDriver("", ""))
 	case "none":
 		plugin.RegisterDriver(none.NewDriver("", ""))
-	case "openstack":
-		plugin.RegisterDriver(openstack.NewDriver("", ""))
-	case "rackspace":
-		plugin.RegisterDriver(rackspace.NewDriver("", ""))
-	case "softlayer":
-		plugin.RegisterDriver(softlayer.NewDriver("", ""))
 	case "virtualbox":
 		plugin.RegisterDriver(virtualbox.NewDriver("", ""))
-	case "vmwarefusion":
-		plugin.RegisterDriver(vmwarefusion.NewDriver("", ""))
-	case "vmwarevcloudair":
-		plugin.RegisterDriver(vmwarevcloudair.NewDriver("", ""))
-	case "vmwarevsphere":
-		plugin.RegisterDriver(vmwarevsphere.NewDriver("", ""))
 	default:
 		fmt.Fprintf(os.Stderr, "Unsupported driver: %s\n", driverName)
 		os.Exit(1)

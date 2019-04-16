@@ -3,7 +3,7 @@ package mcndockerclient
 import (
 	"fmt"
 
-	"github.com/docker/machine/libmachine/auth"
+	"github.com/code-ready/machine/libmachine/auth"
 )
 
 type URLer interface {

@@ -3,11 +3,11 @@ package provision
 import (
 	"testing"
 
-	"github.com/docker/machine/drivers/fakedriver"
-	"github.com/docker/machine/libmachine/auth"
-	"github.com/docker/machine/libmachine/engine"
-	"github.com/docker/machine/libmachine/provision/provisiontest"
-	"github.com/docker/machine/libmachine/swarm"
+	"github.com/code-ready/machine/drivers/fakedriver"
+	"github.com/code-ready/machine/libmachine/auth"
+	"github.com/code-ready/machine/libmachine/engine"
+	"github.com/code-ready/machine/libmachine/provision/provisiontest"
+	"github.com/code-ready/machine/libmachine/swarm"
 )
 
 func TestRedHatDefaultStorageDriver(t *testing.T) {

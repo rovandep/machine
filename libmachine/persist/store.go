@@ -1,7 +1,7 @@
 package persist
 
 import (
-	"github.com/docker/machine/libmachine/host"
+	"github.com/code-ready/machine/libmachine/host"
 )
 
 type Store interface {

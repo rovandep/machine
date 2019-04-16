@@ -1,9 +1,9 @@
 # Contributing to machine
 
-[![GoDoc](https://godoc.org/github.com/docker/machine?status.png)](https://godoc.org/github.com/docker/machine)
-[![Build Status](https://travis-ci.org/docker/machine.svg?branch=master)](https://travis-ci.org/docker/machine)
-[![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/docker/machine?svg=true)](https://ci.appveyor.com/project/dmp42/machine-fp5u5)
-[![Coverage Status](https://coveralls.io/repos/docker/machine/badge.svg?branch=master&service=github)](https://coveralls.io/github/docker/machine?branch=master)
+[![GoDoc](https://godoc.org/github.com/code-ready/machine?status.png)](https://godoc.org/github.com/code-ready/machine)
+[![Build Status](https://travis-ci.org/code-ready/machine.svg?branch=master)](https://travis-ci.org/code-ready/machine)
+[![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/code-ready/machine?svg=true)](https://ci.appveyor.com/project/dmp42/machine-fp5u5)
+[![Coverage Status](https://coveralls.io/repos/code-ready/machine/badge.svg?branch=master&service=github)](https://coveralls.io/github/code-ready/machine?branch=master)
 
 Want to hack on Machine? Awesome! Here are instructions to get you
 started.
@@ -38,15 +38,15 @@ Example of cloning and preparing the correct environment `GOPATH`:
     $ mkdir docker-machine
     $ cd docker-machine
     $ export GOPATH="$PWD"
-    $ go get github.com/docker/machine
-    $ cd src/github.com/docker/machine
+    $ go get github.com/code-ready/machine
+    $ cd src/github.com/code-ready/machine
 
 If you want to use your existing workspace, make sure your `GOPATH` is set to
 the directory that contains your `src` directory, e.g.:
 
     $ export GOPATH=/home/yourname/work
     $ mkdir -p $GOPATH/src/github.com/docker
-    $ cd $GOPATH/src/github.com/docker && git clone git@github.com:docker/machine.git
+    $ cd $GOPATH/src/github.com/docker && git clone git@github.com:code-ready/machine.git
     $ cd machine
 
 At this point, simply run:

@@ -3,7 +3,7 @@
 package commands
 
 import (
-	"github.com/docker/machine/libmachine"
+	"github.com/code-ready/machine/libmachine"
 )
 
 func cmdScp(c CommandLine, api libmachine.API) error {

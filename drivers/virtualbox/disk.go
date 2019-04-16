@@ -6,8 +6,8 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/docker/machine/libmachine/log"
-	"github.com/docker/machine/libmachine/mcnutils"
+	"github.com/code-ready/machine/libmachine/log"
+	"github.com/code-ready/machine/libmachine/mcnutils"
 )
 
 type VirtualDisk struct {

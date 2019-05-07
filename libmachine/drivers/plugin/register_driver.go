@@ -25,7 +25,7 @@ func RegisterDriver(d drivers.Driver) {
 Please use this plugin through the main 'crc' binary.
 (Driver version: %s, API version: %d)
 `, d.DriverVersion(),
-   version.APIVersion)
+			version.APIVersion)
 		os.Exit(1)
 	}
 

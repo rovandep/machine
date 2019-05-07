@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"net"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"regexp"
@@ -16,15 +15,13 @@ import (
 	"github.com/code-ready/machine/libmachine/drivers"
 	"github.com/code-ready/machine/libmachine/log"
 	"github.com/code-ready/machine/libmachine/mcnflag"
-	"github.com/code-ready/machine/libmachine/mcnutils"
 	"github.com/code-ready/machine/libmachine/state"
 )
 
 const (
-	defaultCPU                 = 1
-	defaultMemory              = 1024
-	defaultBoot2DockerURL      = ""
-	defaultBoot2DockerImportVM = ""
+	defaultCPU                 = 4
+	defaultMemory              = 8192
+	defaultBundlePath          = ""
 	defaultHostOnlyCIDR        = "192.168.99.1/24"
 	defaultHostOnlyNictype     = "82540EM"
 	defaultHostOnlyPromiscMode = "deny"
@@ -45,21 +42,19 @@ var (
 
 type Driver struct {
 	*drivers.BaseDriver
+	// CRC System bundle
+	BundlePath string
 	VBoxManager
 	HostInterfaces
-	b2dUpdater          B2DUpdater
-	sshKeyGenerator     SSHKeyGenerator
-	diskCreator         DiskCreator
 	logsReader          LogsReader
 	ipWaiter            IPWaiter
 	randomInter         RandomInter
 	sleeper             Sleeper
+	CrcDiskCopier       CRCDiskCopier
 	CPU                 int
 	Memory              int
 	DiskSize            int
 	NatNicType          string
-	Boot2DockerURL      string
-	Boot2DockerImportVM string
 	HostDNSResolver     bool
 	HostOnlyCIDR        string
 	HostOnlyNicType     string
@@ -70,20 +65,21 @@ type Driver struct {
 	DNSProxy            bool
 	NoVTXCheck          bool
 	ShareFolder         string
+	DiskPath            string
+	DiskPathUrl         string
+	SSHKeyPath          string
 }
 
 // NewDriver creates a new VirtualBox driver with default settings.
 func NewDriver(hostName, storePath string) *Driver {
 	return &Driver{
 		VBoxManager:         NewVBoxManager(),
-		b2dUpdater:          NewB2DUpdater(),
-		sshKeyGenerator:     NewSSHKeyGenerator(),
-		diskCreator:         NewDiskCreator(),
 		logsReader:          NewLogsReader(),
 		ipWaiter:            NewIPWaiter(),
 		randomInter:         NewRandomInter(),
 		sleeper:             NewSleeper(),
 		HostInterfaces:      NewHostInterfaces(),
+		CrcDiskCopier:       NewCRCDiskCopier(),
 		Memory:              defaultMemory,
 		CPU:                 defaultCPU,
 		DiskSize:            defaultDiskSize,
@@ -125,16 +121,10 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			EnvVar: "VIRTUALBOX_DISK_SIZE",
 		},
 		mcnflag.StringFlag{
-			Name:   "virtualbox-boot2docker-url",
-			Usage:  "The URL of the boot2docker image. Defaults to the latest available version",
-			Value:  defaultBoot2DockerURL,
-			EnvVar: "VIRTUALBOX_BOOT2DOCKER_URL",
-		},
-		mcnflag.StringFlag{
-			Name:   "virtualbox-import-boot2docker-vm",
-			Usage:  "The name of a Boot2Docker VM to import",
-			Value:  defaultBoot2DockerImportVM,
-			EnvVar: "VIRTUALBOX_BOOT2DOCKER_IMPORT_VM",
+			Name:   "virtualbox-bundlepath-url",
+			Usage:  "The URL of the crc bundlepath. Defaults to the latest available version",
+			Value:  defaultBundlePath,
+			EnvVar: "VIRTUALBOX_BundlePath_URL",
 		},
 		mcnflag.BoolFlag{
 			Name:   "virtualbox-host-dns-resolver",
@@ -205,10 +195,14 @@ func (d *Driver) GetSSHHostname() (string, error) {
 
 func (d *Driver) GetSSHUsername() string {
 	if d.SSHUser == "" {
-		d.SSHUser = "docker"
+		d.SSHUser = drivers.DefaultSSHUser
 	}
 
 	return d.SSHUser
+}
+
+func (d *Driver) GetSSHKeyPath() string {
+	return d.SSHKeyPath
 }
 
 // DriverName returns the name of the driver
@@ -231,10 +225,7 @@ func (d *Driver) SetConfigFromFlags(flags drivers.DriverOptions) error {
 	d.CPU = flags.Int("virtualbox-cpu-count")
 	d.Memory = flags.Int("virtualbox-memory")
 	d.DiskSize = flags.Int("virtualbox-disk-size")
-	d.Boot2DockerURL = flags.String("virtualbox-boot2docker-url")
-	d.SetSwarmConfigFromFlags(flags)
-	d.SSHUser = "docker"
-	d.Boot2DockerImportVM = flags.String("virtualbox-import-boot2docker-vm")
+	d.SSHUser = drivers.DefaultSSHUser
 	d.HostDNSResolver = flags.Bool("virtualbox-host-dns-resolver")
 	d.NatNicType = flags.String("virtualbox-nat-nictype")
 	d.HostOnlyCIDR = flags.String("virtualbox-hostonly-cidr")
@@ -273,12 +264,6 @@ func (d *Driver) PreCreateCheck() error {
 		}
 	}
 
-	// Downloading boot2docker to cache should be done here to make sure
-	// that a download failure will not leave a machine half created.
-	if err := d.b2dUpdater.UpdateISOCache(d.StorePath, d.Boot2DockerURL); err != nil {
-		return err
-	}
-
 	// Check that Host-only interfaces are ok
 	if _, err = listHostOnlyAdapters(d.VBoxManager); err != nil {
 		return err
@@ -297,56 +282,10 @@ func (d *Driver) Create() error {
 }
 
 func (d *Driver) CreateVM() error {
-	if err := d.b2dUpdater.CopyIsoToMachineDir(d.StorePath, d.MachineName, d.Boot2DockerURL); err != nil {
-		return err
-	}
-
 	log.Info("Creating VirtualBox VM...")
 
-	// import b2d VM if requested
-	if d.Boot2DockerImportVM != "" {
-		name := d.Boot2DockerImportVM
-
-		// make sure vm is stopped
-		_ = d.vbm("controlvm", name, "poweroff")
-
-		diskInfo, err := getVMDiskInfo(name, d.VBoxManager)
-		if err != nil {
-			return err
-		}
-
-		if _, err := os.Stat(diskInfo.Path); err != nil {
-			return err
-		}
-
-		if err := d.vbm("clonehd", diskInfo.Path, d.diskPath()); err != nil {
-			return err
-		}
-
-		log.Debugf("Importing VM settings...")
-		vmInfo, err := getVMInfo(name, d.VBoxManager)
-		if err != nil {
-			return err
-		}
-
-		d.CPU = vmInfo.CPUs
-		d.Memory = vmInfo.Memory
-
-		log.Debugf("Importing SSH key...")
-		keyPath := filepath.Join(mcnutils.GetHomeDir(), ".ssh", "id_boot2docker")
-		if err := mcnutils.CopyFile(keyPath, d.GetSSHKeyPath()); err != nil {
-			return err
-		}
-	} else {
-		log.Infof("Creating SSH key...")
-		if err := d.sshKeyGenerator.Generate(d.GetSSHKeyPath()); err != nil {
-			return err
-		}
-
-		log.Debugf("Creating disk image...")
-		if err := d.diskCreator.Create(d.DiskSize, d.publicSSHKeyPath(), d.diskPath()); err != nil {
-			return err
-		}
+	if err := d.CrcDiskCopier.CopyDiskToMachineDir(d.StorePath, d.MachineName, d.DiskPathUrl); err != nil {
+		return err
 	}
 
 	if err := d.vbm("createvm",
@@ -384,7 +323,7 @@ func (d *Driver) CreateVM() error {
 		"--bioslogofadeout", "off",
 		"--bioslogodisplaytime", "0",
 		"--biosbootmenu", "disabled",
-		"--ostype", "Linux26_64",
+		"--ostype", "Fedora_64",
 		"--cpus", fmt.Sprintf("%d", cpus),
 		"--memory", fmt.Sprintf("%d", d.Memory),
 		"--acpi", "on",
@@ -400,7 +339,7 @@ func (d *Driver) CreateVM() error {
 		"--largepages", "on",
 		"--vtxvpid", "on",
 		"--accelerate3d", "off",
-		"--boot1", "dvd"}
+		"--boot1", "disk"}
 
 	if runtime.GOOS == "windows" && runtime.GOARCH == "386" {
 		modifyFlags = append(modifyFlags, "--longmode", "on")
@@ -420,6 +359,8 @@ func (d *Driver) CreateVM() error {
 	if err := d.vbm("storagectl", d.MachineName,
 		"--name", "SATA",
 		"--add", "sata",
+		"--bootable", "on",
+		"--portcount", "1",
 		"--hostiocache", "on"); err != nil {
 		return err
 	}
@@ -428,17 +369,8 @@ func (d *Driver) CreateVM() error {
 		"--storagectl", "SATA",
 		"--port", "0",
 		"--device", "0",
-		"--type", "dvddrive",
-		"--medium", d.ResolveStorePath("boot2docker.iso")); err != nil {
-		return err
-	}
-
-	if err := d.vbm("storageattach", d.MachineName,
-		"--storagectl", "SATA",
-		"--port", "1",
-		"--device", "0",
 		"--type", "hdd",
-		"--medium", d.diskPath()); err != nil {
+		"--medium", filepath.Join(d.DiskPath)); err != nil {
 		return err
 	}
 
@@ -448,36 +380,6 @@ func (d *Driver) CreateVM() error {
 	}
 	if err := d.vbm("guestproperty", "set", d.MachineName, "/VirtualBox/GuestAdd/SharedFolders/MountDir", "/"); err != nil {
 		return err
-	}
-
-	shareName, shareDir := getShareDriveAndName()
-
-	if d.ShareFolder != "" {
-		shareDir, shareName = parseShareFolder(d.ShareFolder)
-	}
-
-	if shareDir != "" && !d.NoShare {
-		log.Debugf("setting up shareDir '%s' -> '%s'", shareDir, shareName)
-		if _, err := os.Stat(shareDir); err != nil && !os.IsNotExist(err) {
-			return err
-		} else if !os.IsNotExist(err) {
-			if shareName == "" {
-				// parts of the VBox internal code are buggy with share names that start with "/"
-				shareName = strings.TrimLeft(shareDir, "/")
-				// TODO do some basic Windows -> MSYS path conversion
-				// ie, s!^([a-z]+):[/\\]+!\1/!; s!\\!/!g
-			}
-
-			// woo, shareDir exists!  let's carry on!
-			if err := d.vbm("sharedfolder", "add", d.MachineName, "--name", shareName, "--hostpath", shareDir, "--automount"); err != nil {
-				return err
-			}
-
-			// enable symlinks
-			if err := d.vbm("setextradata", d.MachineName, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/"+shareName, "1"); err != nil {
-				return err
-			}
-		}
 	}
 
 	return nil

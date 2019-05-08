@@ -2,33 +2,28 @@ package virtualbox
 
 import (
 	"bufio"
+	"github.com/code-ready/machine/libmachine/mcnutils"
 	"math/rand"
 	"os"
 
 	"time"
 
-	"github.com/code-ready/machine/libmachine/mcnutils"
 	"github.com/code-ready/machine/libmachine/ssh"
 )
 
-// B2DUpdater describes the interactions with b2d.
-type B2DUpdater interface {
-	UpdateISOCache(storePath, isoURL string) error
-	CopyIsoToMachineDir(storePath, machineName, isoURL string) error
+// CRCDiskCopier describes the interactions with crc disk image.
+type CRCDiskCopier interface {
+	CopyDiskToMachineDir(storePath, machineName, isoURL string) error
 }
 
-func NewB2DUpdater() B2DUpdater {
-	return &b2dUtilsUpdater{}
+func NewCRCDiskCopier() CRCDiskCopier {
+	return &crcDiskUtilsCopier{}
 }
 
-type b2dUtilsUpdater struct{}
+type crcDiskUtilsCopier struct{}
 
-func (u *b2dUtilsUpdater) CopyIsoToMachineDir(storePath, machineName, isoURL string) error {
-	return mcnutils.NewB2dUtils(storePath).CopyIsoToMachineDir(isoURL, machineName)
-}
-
-func (u *b2dUtilsUpdater) UpdateISOCache(storePath, isoURL string) error {
-	return mcnutils.NewB2dUtils(storePath).UpdateISOCache(isoURL)
+func (u *crcDiskUtilsCopier) CopyDiskToMachineDir(storePath, machineName, isoURL string) error {
+	return mcnutils.NewB2dUtils(storePath).CopyDiskToMachineDir(isoURL, machineName)
 }
 
 // SSHKeyGenerator describes the generation of ssh keys.

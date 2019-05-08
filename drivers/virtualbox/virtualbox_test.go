@@ -503,9 +503,7 @@ func mockCalls(t *testing.T, driver *Driver, expectedCalls []Call) {
 
 	driver.Boot2DockerURL = "http://b2d.org"
 	driver.VBoxManager = mockOperations
-	driver.b2dUpdater = mockOperations
 	driver.sshKeyGenerator = mockOperations
-	driver.diskCreator = mockOperations
 	driver.logsReader = mockOperations
 	driver.ipWaiter = mockOperations
 	driver.randomInter = mockOperations

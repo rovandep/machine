@@ -109,8 +109,9 @@ func (s Filestore) SetExists(name string) error {
 }
 
 func (s Filestore) Exists(name string) (bool, error) {
-	_, err := os.Stat(filepath.Join(s.GetMachinesDir(), name, fmt.Sprintf(".%s-exist", name)))
-	log.Debugf("Checking file: %s", filepath.Join(s.GetMachinesDir(), name, fmt.Sprintf(".%s-exist", name)))
+	filename := filepath.Join(s.GetMachinesDir(), name, fmt.Sprintf(".%s-exist", name))
+	_, err := os.Stat(filename)
+	log.Debugf("Checking file: %s", filename)
 
 	if os.IsNotExist(err) {
 		return false, nil

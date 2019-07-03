@@ -96,6 +96,18 @@ func (s Filestore) List() ([]string, error) {
 	return hostNames, nil
 }
 
+func (s Filestore) SetExists(name string) error {
+	filename := filepath.Join(s.GetMachinesDir(), name, fmt.Sprintf(".%s-exist", name))
+	file, err := os.OpenFile(filename, os.O_RDONLY|os.O_CREATE, 0666)
+	if err != nil {
+		return err
+	}
+	file.Close()
+	log.Debugf("Created %s", filename)
+
+	return nil
+}
+
 func (s Filestore) Exists(name string) (bool, error) {
 	_, err := os.Stat(filepath.Join(s.GetMachinesDir(), name, fmt.Sprintf(".%s-exist", name)))
 	log.Debugf("Checking file: %s", filepath.Join(s.GetMachinesDir(), name, fmt.Sprintf(".%s-exist", name)))

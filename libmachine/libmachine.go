@@ -120,7 +120,10 @@ func (api *Client) Create(h *host.Host) error {
 		return fmt.Errorf("Error creating machine: %s", err)
 	}
 
-	log.Debug("Reticulating splines...")
+	log.Debug("Machine successfully created")
+	if err := api.SetExists(h.Name); err != nil {
+		log.Debug("Failed to record VM existence")
+	}
 
 	return nil
 }

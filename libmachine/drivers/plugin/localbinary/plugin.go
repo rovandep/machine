@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -94,7 +95,7 @@ func (e ErrPluginBinaryNotFound) Error() string {
 // or we assume `crc` is in the PATH.
 //  + If the driver is NOT a core driver, then the separate binary must be in the PATH and its name must be
 // `crc-machine-driverName`
-func driverPath(driverName string) string {
+func driverPath(driverName string, binaryPath string) string {
 	for _, coreDriver := range CoreDrivers {
 		if coreDriver == driverName {
 			if CurrentBinaryIsCRCMachine {
@@ -104,11 +105,16 @@ func driverPath(driverName string) string {
 		}
 	}
 
-	return fmt.Sprintf("crc-driver-%s", driverName)
+	driverName = fmt.Sprintf("crc-driver-%s", driverName)
+	if binaryPath != "" {
+		return filepath.Join(binaryPath, driverName)
+	}
+
+	return driverName
 }
 
-func NewPlugin(driverName string) (*Plugin, error) {
-	driverPath := driverPath(driverName)
+func NewPlugin(driverName string, binaryPath string) (*Plugin, error) {
+	driverPath := driverPath(driverName, binaryPath)
 	binaryPath, err := exec.LookPath(driverPath)
 	if err != nil {
 		return nil, ErrPluginBinaryNotFound{driverName, driverPath}

@@ -92,8 +92,8 @@ func (e ErrPluginBinaryNotFound) Error() string {
 // driverPath finds the path of a driver binary by its name.
 //  + If the driver is a core driver, there is no separate driver binary. We reuse current binary if it's `crc`
 // or we assume `crc` is in the PATH.
-//  + If the driver is NOT a core driver, then the separate binary must be in the PATH and it's name must be
-// `machine-driver-driverName`
+//  + If the driver is NOT a core driver, then the separate binary must be in the PATH and its name must be
+// `crc-machine-driverName`
 func driverPath(driverName string) string {
 	for _, coreDriver := range CoreDrivers {
 		if coreDriver == driverName {

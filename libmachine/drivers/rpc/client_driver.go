@@ -21,7 +21,7 @@ var (
 )
 
 type RPCClientDriverFactory interface {
-	NewRPCClientDriver(driverName string, rawDriver []byte) (*RPCClientDriver, error)
+	NewRPCClientDriver(driverName string, driverPath string, rawDriver []byte) (*RPCClientDriver, error)
 	io.Closer
 }
 

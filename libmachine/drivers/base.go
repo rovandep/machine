@@ -82,6 +82,9 @@ func (d *BaseDriver) ResolveStorePath(file string) string {
 }
 
 // Returns the name of the bundle which was used to create this machine
-func (d* BaseDriver) GetBundleName() (string, error) {
+func (d *BaseDriver) GetBundleName() (string, error) {
+	if d.BundleName == "" {
+		return "", errors.New("Bundle name is not set")
+	}
 	return d.BundleName, nil
 }

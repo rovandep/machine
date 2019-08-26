@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	DefaultSSHUser = "core"
-	DefaultSSHPort = 22
+	DefaultSSHUser    = "core"
+	DefaultSSHPort    = 22
 	DefaultPrivateKey = "id_rsa_rsc"
 )
 

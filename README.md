@@ -1,3 +1,3 @@
 # code-ready/machine
 
-Modified version of machine-drivers/machine for use with CodeReady Containers
+Modified version of https://github.com/machine-drivers/machine for use with CodeReady Containers

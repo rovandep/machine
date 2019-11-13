@@ -4,14 +4,12 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/code-ready/machine/commands/mcndirs"
 	"github.com/code-ready/machine/libmachine/auth"
 	"github.com/code-ready/machine/libmachine/engine"
 	"github.com/code-ready/machine/libmachine/swarm"
 )
 
 func TestMigrateHostV0ToV1(t *testing.T) {
-	mcndirs.BaseDir = "/tmp/migration"
 	originalHost := &V0{
 		HostOptions:    nil,
 		SwarmDiscovery: "token://foobar",

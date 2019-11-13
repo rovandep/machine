@@ -9,7 +9,6 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/code-ready/machine/commands/mcndirs"
 	"github.com/code-ready/machine/drivers/none"
 	"github.com/code-ready/machine/libmachine/host"
 	"github.com/code-ready/machine/libmachine/hosttest"
@@ -25,8 +24,6 @@ func getTestStore() Filestore {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-
-	mcndirs.BaseDir = tmpDir
 
 	return Filestore{
 		Path:             tmpDir,

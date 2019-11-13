@@ -5,7 +5,6 @@ import (
 
 	"github.com/code-ready/machine/drivers/fakedriver"
 	_ "github.com/code-ready/machine/drivers/none"
-	"github.com/code-ready/machine/libmachine/provision"
 	"github.com/code-ready/machine/libmachine/state"
 )
 
@@ -40,11 +39,6 @@ func TestValidateHostnameInvalid(t *testing.T) {
 }
 
 func TestStart(t *testing.T) {
-	defer provision.SetDetector(&provision.StandardDetector{})
-	provision.SetDetector(&provision.FakeDetector{
-		Provisioner: provision.NewNetstatProvisioner(),
-	})
-
 	host := &Host{
 		Driver: &fakedriver.Driver{
 			MockState: state.Stopped,

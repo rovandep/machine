@@ -1,4 +1,4 @@
-module github.com/code-ready/machine
+module github.com/rovandep/machine
 
 require (
 	github.com/bugsnag/bugsnag-go v1.5.1

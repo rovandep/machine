@@ -1,9 +1,9 @@
 package host
 
 import (
-	"github.com/code-ready/machine/libmachine/auth"
-	"github.com/code-ready/machine/libmachine/engine"
-	"github.com/code-ready/machine/libmachine/swarm"
+	"github.com/rovandep/machine/libmachine/auth"
+	"github.com/rovandep/machine/libmachine/engine"
+	"github.com/rovandep/machine/libmachine/swarm"
 )
 
 // In the 0.1.0 => 0.2.0 transition, the JSON representation of

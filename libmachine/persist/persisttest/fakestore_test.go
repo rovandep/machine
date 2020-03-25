@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/code-ready/machine/libmachine/host"
+	"github.com/rovandep/machine/libmachine/host"
 )
 
 func TestExists(t *testing.T) {

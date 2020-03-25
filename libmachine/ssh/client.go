@@ -11,8 +11,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/code-ready/machine/libmachine/log"
-	"github.com/code-ready/machine/libmachine/mcnutils"
+	"github.com/rovandep/machine/libmachine/log"
+	"github.com/rovandep/machine/libmachine/mcnutils"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/crypto/ssh/terminal"
 )

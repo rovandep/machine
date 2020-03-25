@@ -4,9 +4,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/code-ready/machine/libmachine/auth"
-	"github.com/code-ready/machine/libmachine/engine"
-	"github.com/code-ready/machine/libmachine/swarm"
+	"github.com/rovandep/machine/libmachine/auth"
+	"github.com/rovandep/machine/libmachine/engine"
+	"github.com/rovandep/machine/libmachine/swarm"
 )
 
 func TestMigrateHostV0ToV1(t *testing.T) {

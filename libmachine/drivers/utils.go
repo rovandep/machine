@@ -3,9 +3,9 @@ package drivers
 import (
 	"fmt"
 
-	"github.com/code-ready/machine/libmachine/log"
-	"github.com/code-ready/machine/libmachine/mcnutils"
-	"github.com/code-ready/machine/libmachine/ssh"
+	"github.com/rovandep/machine/libmachine/log"
+	"github.com/rovandep/machine/libmachine/mcnutils"
+	"github.com/rovandep/machine/libmachine/ssh"
 )
 
 func GetSSHClientFromDriver(d Driver, sshPrivateKeyPath string) (ssh.Client, error) {

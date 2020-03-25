@@ -3,15 +3,15 @@ package host
 import (
 	"regexp"
 
-	"github.com/code-ready/machine/libmachine/auth"
-	"github.com/code-ready/machine/libmachine/drivers"
-	"github.com/code-ready/machine/libmachine/engine"
-	"github.com/code-ready/machine/libmachine/log"
-	"github.com/code-ready/machine/libmachine/mcnerror"
-	"github.com/code-ready/machine/libmachine/mcnutils"
-	"github.com/code-ready/machine/libmachine/ssh"
-	"github.com/code-ready/machine/libmachine/state"
-	"github.com/code-ready/machine/libmachine/swarm"
+	"github.com/rovandep/machine/libmachine/auth"
+	"github.com/rovandep/machine/libmachine/drivers"
+	"github.com/rovandep/machine/libmachine/engine"
+	"github.com/rovandep/machine/libmachine/log"
+	"github.com/rovandep/machine/libmachine/mcnerror"
+	"github.com/rovandep/machine/libmachine/mcnutils"
+	"github.com/rovandep/machine/libmachine/ssh"
+	"github.com/rovandep/machine/libmachine/state"
+	"github.com/rovandep/machine/libmachine/swarm"
 )
 
 var (

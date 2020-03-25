@@ -6,19 +6,19 @@ import (
 
 	"io"
 
-	"github.com/code-ready/machine/drivers/errdriver"
-	"github.com/code-ready/machine/libmachine/auth"
-	"github.com/code-ready/machine/libmachine/drivers"
-	"github.com/code-ready/machine/libmachine/drivers/plugin/localbinary"
-	"github.com/code-ready/machine/libmachine/drivers/rpc"
-	"github.com/code-ready/machine/libmachine/host"
-	"github.com/code-ready/machine/libmachine/log"
-	"github.com/code-ready/machine/libmachine/mcnerror"
-	"github.com/code-ready/machine/libmachine/mcnutils"
-	"github.com/code-ready/machine/libmachine/persist"
-	"github.com/code-ready/machine/libmachine/ssh"
-	"github.com/code-ready/machine/libmachine/state"
-	"github.com/code-ready/machine/libmachine/version"
+	"github.com/rovandep/machine/drivers/errdriver"
+	"github.com/rovandep/machine/libmachine/auth"
+	"github.com/rovandep/machine/libmachine/drivers"
+	"github.com/rovandep/machine/libmachine/drivers/plugin/localbinary"
+	"github.com/rovandep/machine/libmachine/drivers/rpc"
+	"github.com/rovandep/machine/libmachine/host"
+	"github.com/rovandep/machine/libmachine/log"
+	"github.com/rovandep/machine/libmachine/mcnerror"
+	"github.com/rovandep/machine/libmachine/mcnutils"
+	"github.com/rovandep/machine/libmachine/persist"
+	"github.com/rovandep/machine/libmachine/ssh"
+	"github.com/rovandep/machine/libmachine/state"
+	"github.com/rovandep/machine/libmachine/version"
 )
 
 type API interface {

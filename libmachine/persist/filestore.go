@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/code-ready/machine/libmachine/host"
-	"github.com/code-ready/machine/libmachine/log"
-	"github.com/code-ready/machine/libmachine/mcnerror"
+	"github.com/rovandep/machine/libmachine/host"
+	"github.com/rovandep/machine/libmachine/log"
+	"github.com/rovandep/machine/libmachine/mcnerror"
 )
 
 type Filestore struct {

@@ -8,7 +8,7 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/code-ready/machine/libmachine/log"
+	"github.com/rovandep/machine/libmachine/log"
 	"golang.org/x/sys/windows/registry"
 )
 

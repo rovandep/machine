@@ -1,6 +1,6 @@
 package crashreport
 
-import "github.com/code-ready/machine/libmachine/log"
+import "github.com/rovandep/machine/libmachine/log"
 
 type logger struct{}
 

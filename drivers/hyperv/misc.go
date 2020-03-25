@@ -1,7 +1,7 @@
 package hyperv
 
 import (
-	"github.com/code-ready/machine/libmachine/mcnutils"
+	"github.com/rovandep/machine/libmachine/mcnutils"
 )
 
 // CRCDiskCopier describes the interactions with crc disk image.

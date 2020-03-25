@@ -3,7 +3,7 @@ package cli
 import (
 	"testing"
 
-	"github.com/code-ready/machine/its"
+	"github.com/rovandep/machine/its"
 )
 
 func TestDriverHelp(t *testing.T) {

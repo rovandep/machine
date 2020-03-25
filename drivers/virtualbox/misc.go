@@ -5,11 +5,11 @@ import (
 	"math/rand"
 	"os"
 
-	"github.com/code-ready/machine/libmachine/mcnutils"
+	"github.com/rovandep/machine/libmachine/mcnutils"
 
 	"time"
 
-	"github.com/code-ready/machine/libmachine/ssh"
+	"github.com/rovandep/machine/libmachine/ssh"
 )
 
 // CRCDiskCopier describes the interactions with crc disk image.

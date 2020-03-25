@@ -3,8 +3,8 @@ package drivers
 import (
 	"testing"
 
-	"github.com/code-ready/machine/libmachine/mcnflag"
-	"github.com/code-ready/machine/libmachine/state"
+	"github.com/rovandep/machine/libmachine/mcnflag"
+	"github.com/rovandep/machine/libmachine/state"
 	"github.com/stretchr/testify/assert"
 )
 

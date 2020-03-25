@@ -3,9 +3,9 @@ package drivers
 import (
 	"errors"
 
-	"github.com/code-ready/machine/libmachine/log"
-	"github.com/code-ready/machine/libmachine/mcnflag"
-	"github.com/code-ready/machine/libmachine/state"
+	"github.com/rovandep/machine/libmachine/log"
+	"github.com/rovandep/machine/libmachine/mcnflag"
+	"github.com/rovandep/machine/libmachine/state"
 )
 
 // Driver defines how a host is created and controlled. Different types of

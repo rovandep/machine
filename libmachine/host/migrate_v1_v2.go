@@ -3,10 +3,10 @@ package host
 import (
 	"path/filepath"
 
-	"github.com/code-ready/machine/libmachine/auth"
-	"github.com/code-ready/machine/libmachine/drivers"
-	"github.com/code-ready/machine/libmachine/engine"
-	"github.com/code-ready/machine/libmachine/swarm"
+	"github.com/rovandep/machine/libmachine/auth"
+	"github.com/rovandep/machine/libmachine/drivers"
+	"github.com/rovandep/machine/libmachine/engine"
+	"github.com/rovandep/machine/libmachine/swarm"
 )
 
 type AuthOptionsV1 struct {

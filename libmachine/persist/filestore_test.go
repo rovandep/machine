@@ -9,9 +9,9 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/code-ready/machine/drivers/none"
-	"github.com/code-ready/machine/libmachine/host"
-	"github.com/code-ready/machine/libmachine/hosttest"
+	"github.com/rovandep/machine/drivers/none"
+	"github.com/rovandep/machine/libmachine/host"
+	"github.com/rovandep/machine/libmachine/hosttest"
 )
 
 func cleanup() {

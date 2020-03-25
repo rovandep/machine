@@ -3,9 +3,9 @@ package host
 import (
 	"testing"
 
-	"github.com/code-ready/machine/drivers/fakedriver"
-	_ "github.com/code-ready/machine/drivers/none"
-	"github.com/code-ready/machine/libmachine/state"
+	"github.com/rovandep/machine/drivers/fakedriver"
+	_ "github.com/rovandep/machine/drivers/none"
+	"github.com/rovandep/machine/libmachine/state"
 )
 
 func TestValidateHostnameValid(t *testing.T) {

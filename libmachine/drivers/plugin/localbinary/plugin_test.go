@@ -9,7 +9,7 @@ import (
 
 	"os"
 
-	"github.com/code-ready/machine/libmachine/log"
+	"github.com/rovandep/machine/libmachine/log"
 	"github.com/stretchr/testify/assert"
 )
 

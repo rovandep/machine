@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/code-ready/machine/libmachine/state"
+	"github.com/rovandep/machine/libmachine/state"
 )
 
 var (

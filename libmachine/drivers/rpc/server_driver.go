@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"runtime/debug"
 
-	"github.com/code-ready/machine/libmachine/drivers"
-	"github.com/code-ready/machine/libmachine/log"
-	"github.com/code-ready/machine/libmachine/mcnflag"
-	"github.com/code-ready/machine/libmachine/state"
-	"github.com/code-ready/machine/libmachine/version"
+	"github.com/rovandep/machine/libmachine/drivers"
+	"github.com/rovandep/machine/libmachine/log"
+	"github.com/rovandep/machine/libmachine/mcnflag"
+	"github.com/rovandep/machine/libmachine/state"
+	"github.com/rovandep/machine/libmachine/version"
 )
 
 type Stacker interface {

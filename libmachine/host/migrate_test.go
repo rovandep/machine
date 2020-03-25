@@ -3,8 +3,8 @@ package host
 import (
 	"testing"
 
-	"github.com/code-ready/machine/drivers/none"
-	"github.com/code-ready/machine/libmachine/auth"
+	"github.com/rovandep/machine/drivers/none"
+	"github.com/rovandep/machine/libmachine/auth"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -37,7 +37,7 @@ func TestMigrateHost(t *testing.T) {
         "Memory": 0,
         "Disk": 0,
         "AuthOptions": {
-            "StorePath": "/Users/nathanleclaire/.code-ready/machine/machines/default"
+            "StorePath": "/Users/nathanleclaire/.rovandep/machine/machines/default"
         }
     },
     "Name": "default",
@@ -47,7 +47,7 @@ func TestMigrateHost(t *testing.T) {
 				ConfigVersion: 3,
 				HostOptions: &Options{
 					AuthOptions: &auth.Options{
-						StorePath: "/Users/nathanleclaire/.code-ready/machine/machines/default",
+						StorePath: "/Users/nathanleclaire/.rovandep/machine/machines/default",
 					},
 				},
 				Name:       "default",
@@ -58,7 +58,7 @@ func TestMigrateHost(t *testing.T) {
 
 					// TODO (nathanleclaire): The "." argument here is a already existing
 					// bug (or at least likely to cause them in the future) and most
-					// likely should be "/Users/nathanleclaire/.code-ready/machine"
+					// likely should be "/Users/nathanleclaire/.rovandep/machine"
 					//
 					// These default StorePath settings get over-written when we
 					// instantiate the plugin driver, but this seems entirely incidental.
@@ -82,7 +82,7 @@ func TestMigrateHost(t *testing.T) {
         "Memory": 0,
         "Disk": 0,
         "AuthOptions": {
-            "StorePath": "/Users/nathanleclaire/.code-ready/machine/machines/default"
+            "StorePath": "/Users/nathanleclaire/.rovandep/machine/machines/default"
         }
     },
     "Name": "default"
@@ -105,7 +105,7 @@ func TestMigrateHost(t *testing.T) {
         "Memory": 0,
         "Disk": 0,
         "AuthOptions": {
-            "StorePath": "/Users/nathanleclaire/.code-ready/machine/machines/default"
+            "StorePath": "/Users/nathanleclaire/.rovandep/machine/machines/default"
         }
     },
     "Name": "default"
@@ -114,7 +114,7 @@ func TestMigrateHost(t *testing.T) {
 				ConfigVersion: 3,
 				HostOptions: &Options{
 					AuthOptions: &auth.Options{
-						StorePath: "/Users/nathanleclaire/.code-ready/machine/machines/default",
+						StorePath: "/Users/nathanleclaire/.rovandep/machine/machines/default",
 					},
 				},
 				Name:       "default",
@@ -144,25 +144,25 @@ func TestMigrateHost(t *testing.T) {
         "Memory": 0,
         "Disk": 0,
         "AuthOptions": {
-            "StorePath": "/Users/nathanleclaire/.code-ready/machine/machines/default"
+            "StorePath": "/Users/nathanleclaire/.rovandep/machine/machines/default"
         }
     },
-    "StorePath": "/Users/nathanleclaire/.code-ready/machine/machines/default",
+    "StorePath": "/Users/nathanleclaire/.rovandep/machine/machines/default",
     "Name": "default"
 }`),
 			expectedHostAfter: &Host{
 				ConfigVersion: 3,
 				HostOptions: &Options{
 					AuthOptions: &auth.Options{
-						StorePath: "/Users/nathanleclaire/.code-ready/machine/machines/default",
+						StorePath: "/Users/nathanleclaire/.rovandep/machine/machines/default",
 					},
 				},
 				Name:       "default",
 				DriverName: "virtualbox",
-				RawDriver:  []byte(`{"MachineName":"default","StorePath":"/Users/nathanleclaire/.code-ready/machine"}`),
+				RawDriver:  []byte(`{"MachineName":"default","StorePath":"/Users/nathanleclaire/.rovandep/machine"}`),
 				Driver: &RawDataDriver{
-					Data:   []byte(`{"MachineName":"default","StorePath":"/Users/nathanleclaire/.code-ready/machine"}`),
-					Driver: none.NewDriver("default", "/Users/nathanleclaire/.code-ready/machine"),
+					Data:   []byte(`{"MachineName":"default","StorePath":"/Users/nathanleclaire/.rovandep/machine"}`),
+					Driver: none.NewDriver("default", "/Users/nathanleclaire/.rovandep/machine"),
 				},
 			},
 			expectedMigrationPerformed: true,

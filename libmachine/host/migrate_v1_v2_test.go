@@ -13,8 +13,8 @@ var (
         "SSHUser": "docker",
         "SSHPort": 64477,
         "MachineName": "foobar",
-        "CaCertPath": "/Users/catbug/.code-ready/machine/certs/ca.pem",
-        "PrivateKeyPath": "/Users/catbug/.code-ready/machine/certs/ca-key.pem",
+        "CaCertPath": "/Users/catbug/.rovandep/machine/certs/ca.pem",
+        "PrivateKeyPath": "/Users/catbug/.rovandep/machine/certs/ca-key.pem",
         "SwarmMaster": false,
         "SwarmHost": "tcp://0.0.0.0:3376",
         "SwarmDiscovery": "",
@@ -66,25 +66,25 @@ var (
         },
         "AuthOptions": {
             "StorePath": "",
-            "CaCertPath": "/Users/catbug/.code-ready/machine/certs/ca.pem",
+            "CaCertPath": "/Users/catbug/.rovandep/machine/certs/ca.pem",
             "CaCertRemotePath": "",
-            "ServerCertPath": "/Users/catbug/.code-ready/machine/machines/foobar/server.pem",
-            "ServerKeyPath": "/Users/catbug/.code-ready/machine/machines/foobar/server-key.pem",
-            "ClientKeyPath": "/Users/catbug/.code-ready/machine/certs/key.pem",
+            "ServerCertPath": "/Users/catbug/.rovandep/machine/machines/foobar/server.pem",
+            "ServerKeyPath": "/Users/catbug/.rovandep/machine/machines/foobar/server-key.pem",
+            "ClientKeyPath": "/Users/catbug/.rovandep/machine/certs/key.pem",
             "ServerCertRemotePath": "",
             "ServerKeyRemotePath": "",
-            "PrivateKeyPath": "/Users/catbug/.code-ready/machine/certs/ca-key.pem",
-            "ClientCertPath": "/Users/catbug/.code-ready/machine/certs/cert.pem"
+            "PrivateKeyPath": "/Users/catbug/.rovandep/machine/certs/ca-key.pem",
+            "ClientCertPath": "/Users/catbug/.rovandep/machine/certs/cert.pem"
         }
     },
-    "StorePath": "/Users/catbug/.code-ready/machine/machines/foobar"
+    "StorePath": "/Users/catbug/.rovandep/machine/machines/foobar"
 }`)
 )
 
 func TestMigrateHostV1ToHostV2(t *testing.T) {
 	h := &Host{}
-	expectedGlobalStorePath := "/Users/catbug/.code-ready/machine"
-	expectedCaPrivateKeyPath := "/Users/catbug/.code-ready/machine/certs/ca-key.pem"
+	expectedGlobalStorePath := "/Users/catbug/.rovandep/machine"
+	expectedCaPrivateKeyPath := "/Users/catbug/.rovandep/machine/certs/ca-key.pem"
 	migratedHost, migrationPerformed, err := MigrateHost(h, v1conf)
 	if err != nil {
 		t.Fatalf("Error attempting to migrate host: %s", err)

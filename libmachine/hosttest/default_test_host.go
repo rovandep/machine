@@ -1,12 +1,12 @@
 package hosttest
 
 import (
-	"github.com/code-ready/machine/drivers/none"
-	"github.com/code-ready/machine/libmachine/auth"
-	"github.com/code-ready/machine/libmachine/engine"
-	"github.com/code-ready/machine/libmachine/host"
-	"github.com/code-ready/machine/libmachine/swarm"
-	"github.com/code-ready/machine/libmachine/version"
+	"github.com/rovandep/machine/drivers/none"
+	"github.com/rovandep/machine/libmachine/auth"
+	"github.com/rovandep/machine/libmachine/engine"
+	"github.com/rovandep/machine/libmachine/host"
+	"github.com/rovandep/machine/libmachine/swarm"
+	"github.com/rovandep/machine/libmachine/version"
 )
 
 const (

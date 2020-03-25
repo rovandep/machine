@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 
-	"github.com/code-ready/machine/libmachine/log"
+	"github.com/rovandep/machine/libmachine/log"
 )
 
 type RawHost struct {

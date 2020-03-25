@@ -10,7 +10,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/code-ready/machine/libmachine/log"
+	"github.com/rovandep/machine/libmachine/log"
 )
 
 const (

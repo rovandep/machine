@@ -1,6 +1,6 @@
 package host
 
-import "github.com/code-ready/machine/libmachine/drivers"
+import "github.com/rovandep/machine/libmachine/drivers"
 
 type V2 struct {
 	ConfigVersion int

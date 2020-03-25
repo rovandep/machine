@@ -9,7 +9,7 @@ import (
 
 	"fmt"
 
-	"github.com/code-ready/machine/libmachine/log"
+	"github.com/rovandep/machine/libmachine/log"
 )
 
 var powershell string
